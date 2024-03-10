@@ -1,18 +1,8 @@
 import mysql.connector
 from mysql.connector import errorcode
 
-def drop_tables():
-    connection = mysql.connector.connect(
-        host="127.0.0.1",
-        port=3305,
-        user="saradorfman",
-        password="sar2885",
-        database="saradorfman"
-    )
+def drop_tables(connection, cursor):
 
-    cursor = connection.cursor()
-
-    #drop down all tables exists in db
     TABLES = {}
 
     TABLES['actors_avg_vote_average'] = (
@@ -54,12 +44,13 @@ def drop_tables():
             cursor.execute(table_description)
         except mysql.connector.Error as err:
             if err.errno == errorcode.ER_BAD_TABLE_ERROR:
-                print(f"Table {table_name} doesn't exist")
+                print(f"{table_name} doesn't exist")
             else:
                 print(err.msg)
+                connection.rollback()
+                return err.errno
         else:
-            print(f"Table {table_name} dropped")
+            print(f"{table_name} dropped")
 
     connection.commit()
-    cursor.close()
-    connection.close()
+    return 0

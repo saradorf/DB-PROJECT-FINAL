@@ -26,9 +26,9 @@ def query_2():
     return query
 
 def query_3(min_runtime, max_runtime):
-    """Finds all movies with runtime between min_runtime and max_runtime.
-    :param min_runtime: minimum runtime in minutes
-    :param max_runtime: maximum runtime in minutes
+    """Finds all movies with runtime between min_runtime and max_runtime and returns them ordered by increasing runtime.
+    :param min_runtime: minimum runtime in minutes. assumption: this is an integer.
+    :param max_runtime: maximum runtime in minutes. assumption: this is an integer.
     :return: query, params
     """
     query = f"""
@@ -68,7 +68,7 @@ def query_5(genre):
     return query, (genre,)
 
 def query_6(overview_search_string):
-    """Finds movies that their overview contains words from overview_substring and order them by vote_average.
+    """Finds movies that their overview contains words from overview_search_string and order them by vote_average.
     :param overview_search_string: words to search in the overview
     :return: query, params
     """
@@ -81,7 +81,7 @@ def query_6(overview_search_string):
     return query, (overview_search_string,)
 
 def query_7(title_search_string):
-    """Fins movies with the given substring in the title.
+    """Fins movies that their title contains words from title_search_string.
     :param title_search_string: words to search in the title
     :return: query, params
     """

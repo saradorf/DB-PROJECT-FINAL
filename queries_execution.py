@@ -1,12 +1,9 @@
 from queries_db_script import *
 from create_db_script import *
-from drop_tables import *  # TODO delete
+from drop_tables import *
 from api_data_retrieve import *
 import mysql.connector
 
-# TODO : add assumptions about parameters to the functions
-# TODO : python versions and requirements
-# TODO : explain why the first 3 rows are commented out according to the instructions of daniel in the forum
 connection = mysql.connector.connect(
     host="127.0.0.1",
     port=3305,
@@ -75,11 +72,20 @@ def print_results(results):
     for row in results:
         print(row)
 
-
 if __name__ == "__main__":
-    drop_tables()  # TODO delete
-    create_db(connection, cursor)
-    retreive_data(connection, cursor)
+    # The DB and data are already initialized and contain data
+    # you can uncomment the reinitialization block in order to reinitialize the DB and data
+    # -------------- reinitialization ------------------
+    # ret_value = drop_tables(connection, cursor)
+    # if ret_value != 0:
+    #     exit(ret_value)
+    # ret_value = create_db(connection, cursor)
+    # if ret_value != 0:
+    #     exit(ret_value)
+    # ret_value = retrieve_data(connection, cursor)
+    # if ret_value != 0:
+    #     exit(ret_value)
+    # --------------------------------------------------
 
     # run query 1 and print the results
     running_query_1()
@@ -88,23 +94,31 @@ if __name__ == "__main__":
     running_query_2()
 
     # run query 3 and print the results
-    running_query_3(-2, 0)
+    # NOTICE: the UI constrains the user to enter only integers
+    # since the API is designated to be used by the UI, the inputs are necessarily integers
+    running_query_3(100, 120)
     running_query_3(90, 110)
 
     # run query 4 and print the results
     running_query_4()
 
     # run query 5 and print the results
+    # NOTICE: the UI constrains the user to enter existing genres
+    # since the API is designated to be used by the UI, the input is necessarily an existing genre
     running_query_5("Action")
     running_query_5("Comedy")
     running_query_5("Horror")
 
     # run query 6 and print the results
+    # NOTICE: the UI constrains the user to enter a string
+    # since the API is designated to be used by the UI, the input is necessarily a string
     running_query_6("story")
     running_query_6("love")
     running_query_6("war")
 
     # run query 7 and print the results
+    # NOTICE: the UI constrains the user to enter a string
+    # since the API is designated to be used by the UI, the input is necessarily a string
     running_query_7("ice")
     running_query_7("toy")
     running_query_7("hero")
@@ -113,6 +127,8 @@ if __name__ == "__main__":
     running_query_8()
 
     # run query 9 and print the results
+    # NOTICE: the UI constrains the user to enter existing production countries
+    # since the API is designated to be used by the UI, the input is necessarily an existing production country
     running_query_9("United States of America")
     running_query_9("United Kingdom")
     running_query_9("Germany")

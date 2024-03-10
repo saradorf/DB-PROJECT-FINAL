@@ -85,7 +85,6 @@ def create_db(connection, cursor):
         "GROUP BY actors.id, actors.name"
     )
 
-    # TODO: delete print statements ?
     for table_name in TABLES:
         table_description = TABLES[table_name]
         try:
@@ -96,8 +95,12 @@ def create_db(connection, cursor):
                 print("already exists.")
             else:
                 print(err.msg)
+                connection.rollback()
+                return err.errno
         else:
             print("OK")
 
     connection.commit()
+    return 0
+
 

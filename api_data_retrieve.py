@@ -1,6 +1,7 @@
 import pandas as pd
 from pandasql import sqldf
 import ast
+import mysql.connector
 
 
 def get_processed_data():
@@ -51,7 +52,7 @@ def get_processed_data():
     # print(result.columns)
     return result
 
-def retreive_data(connection, cursor):
+def retrieve_data(connection, cursor):
     movies = get_processed_data()
 
     # ================ Create lists of tuples for the database ================
@@ -103,36 +104,72 @@ def retreive_data(connection, cursor):
 
     # Insert data into actors table
     sql_query = "INSERT INTO actors (id, name) VALUES (%s, %s)"
-    cursor.executemany(sql_query, actors)
+    try:
+        cursor.executemany(sql_query, actors)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     # Insert data into genres table
     sql_query = "INSERT INTO genres (id, name) VALUES (%s, %s)"
-    cursor.executemany(sql_query, genres)
+    try:
+        cursor.executemany(sql_query, genres)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     # Insert data into production_countries table
     sql_query = "INSERT INTO production_countries (iso_3166_1, name) VALUES (%s, %s)"
-    cursor.executemany(sql_query, production_countries)
+    try:
+        cursor.executemany(sql_query, production_countries)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     # Insert data into movies table
     sql_query = "INSERT INTO movies (id, title, overview, runtime, budget, vote_average, vote_count) VALUES (%s, %s, %s, %s, %s, %s, %s) " \
                 "ON DUPLICATE KEY UPDATE id=VALUES(id), title=VALUES(title), overview=VALUES(overview), runtime=VALUES(runtime), budget=VALUES(budget), vote_average=VALUES(vote_average), vote_count=VALUES(vote_count)"
-    cursor.executemany(sql_query, movies_table)
+    try:
+        cursor.executemany(sql_query, movies_table)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     # Insert data into movies_actors table
     sql_query = "INSERT INTO movies_actors (movie_id, actor_id) VALUES (%s, %s)" \
                 "ON DUPLICATE KEY UPDATE movie_id=VALUES(movie_id), actor_id=VALUES(actor_id)"
-    cursor.executemany(sql_query, movies_actors)
+    try:
+        cursor.executemany(sql_query, movies_actors)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     # Insert data into movies_genres table
     sql_query = "INSERT INTO movies_genres (movie_id, genre_id) VALUES (%s, %s)" \
                 "ON DUPLICATE KEY UPDATE movie_id=VALUES(movie_id), genre_id=VALUES(genre_id)"
-    cursor.executemany(sql_query, movies_genres)
+    try:
+        cursor.executemany(sql_query, movies_genres)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     # Insert data into movies_production_countries table
     sql_query = "INSERT INTO movies_production_countries (movie_id, iso_3166_1) VALUES (%s, %s)" \
                 "ON DUPLICATE KEY UPDATE movie_id=VALUES(movie_id), iso_3166_1=VALUES(iso_3166_1)"
-    cursor.executemany(sql_query, movies_production_countries)
+    try:
+        cursor.executemany(sql_query, movies_production_countries)
+    except mysql.connector.Error as err:
+        print(err.msg)
+        connection.rollback()
+        return err.errno
 
     connection.commit()
+    return 0
 
     # ===============================================================

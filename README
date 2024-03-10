@@ -1,0 +1,10 @@
+## Versions we've used
+- Python version: 3.8.1
+- pip version: 22.0.4
+
+## Installation
+To install the necessary packages, run the following commands:
+
+```bash
+pip install mysql-connector-python
+pip install pandasql
