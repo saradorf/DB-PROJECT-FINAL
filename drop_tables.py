@@ -2,7 +2,6 @@ import mysql.connector
 from mysql.connector import errorcode
 
 def drop_tables(connection, cursor):
-
     TABLES = {}
 
     TABLES['actors_avg_vote_average'] = (

@@ -81,7 +81,7 @@ def query_6(overview_search_string):
     return query, (overview_search_string,)
 
 def query_7(title_search_string):
-    """Fins movies that their title contains words from title_search_string.
+    """Finds movies that their title contains words from title_search_string.
     :param title_search_string: words to search in the title
     :return: query, params
     """

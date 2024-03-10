@@ -3,9 +3,7 @@ from pandasql import sqldf
 import ast
 import mysql.connector
 
-
 def get_processed_data():
-    # Sample data
     movies_table = pd.read_csv('movies_metadata.csv')
     credits_table = pd.read_csv('credits.csv')
 
@@ -15,7 +13,7 @@ def get_processed_data():
     movies_table['id'] = movies_table['id'].astype('int64')
     credits_table['id'] = credits_table['id'].astype('int64')
 
-    # Define the join query on the id column and make sure there is only one id column in the result
+    # Define the join query on the id column and filter out rows with missing/invalid values
     query = """
     SELECT DISTINCT
         movies_table.id,
@@ -47,9 +45,6 @@ def get_processed_data():
 
     # Execute the query
     result = sqldf(query, locals())
-    # print number of rows and columns
-    # print(result.shape)
-    # print(result.columns)
     return result
 
 def retrieve_data(connection, cursor):
@@ -170,6 +165,7 @@ def retrieve_data(connection, cursor):
         return err.errno
 
     connection.commit()
+    # ===============================================================
+
     return 0
 
-    # ===============================================================

@@ -2,8 +2,8 @@ import mysql.connector
 from mysql.connector import errorcode
 
 def create_db(connection, cursor):
-
     TABLES = {}
+
     TABLES['movies'] = (
         "CREATE TABLE `movies` ("
         "  `id` int(11) NOT NULL,"
@@ -20,7 +20,6 @@ def create_db(connection, cursor):
         "   FULLTEXT (`overview`),"
         "   FULLTEXT (`title`)"
         ") ENGINE=InnoDB")
-
 
     TABLES['actors'] = (
         "CREATE TABLE `actors` ("

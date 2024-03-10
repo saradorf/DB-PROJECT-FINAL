@@ -74,8 +74,8 @@ def print_results(results):
 
 if __name__ == "__main__":
     # The DB and data are already initialized and contain data
-    # you can uncomment the reinitialization block in order to reinitialize the DB and data
-    # -------------- reinitialization ------------------
+    # the reinitialization block can be uncommented in order to reinitialize the DB and data
+    # =================== reinitialization ===================
     # ret_value = drop_tables(connection, cursor)
     # if ret_value != 0:
     #     exit(ret_value)
@@ -85,7 +85,7 @@ if __name__ == "__main__":
     # ret_value = retrieve_data(connection, cursor)
     # if ret_value != 0:
     #     exit(ret_value)
-    # --------------------------------------------------
+    # ======================================================
 
     # run query 1 and print the results
     running_query_1()
